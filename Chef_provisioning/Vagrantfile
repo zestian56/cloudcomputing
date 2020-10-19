@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+    config.vm.define :chefServer do |chefServer|
+      chefServer.vm.box = "bento/ubuntu-20.04"
+        config.vm.provision 'chef_zero' do |chef|
+          chef.cookbooks_path = "cookbooks" 
+          chef.add_recipe 'apache2'       
+          chef.nodes_path = 'nodes'
+          chef.arguments = "--chef-license accept" 
+        end
+        chefServer.vm.network :private_network, ip: "192.168.100.3"
+        chefServer.vm.hostname = "chefServer"
+    end
+end
